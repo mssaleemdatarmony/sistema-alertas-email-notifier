@@ -2,7 +2,6 @@ from utilities import send_email
 import os
 import json
 from Logger import MyLogger
-from dotenv import load_dotenv
 
 
 
