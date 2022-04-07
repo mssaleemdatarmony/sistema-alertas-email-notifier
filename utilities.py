@@ -1,4 +1,6 @@
 import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def send_email(sender, sender_pass, subject, body, receiver=None):
     """
@@ -17,5 +19,9 @@ def send_email(sender, sender_pass, subject, body, receiver=None):
         smtp.starttls()
         smtp.ehlo()
         smtp.login(sender, sender_pass)
-        msg = f'Subject: {subject}\n\n{body}'
-        smtp.sendmail(sender, email_receiver, msg=msg)
+        msg = MIMEMultipart()
+        msg['Subject'] = subject
+        msg['From'] = sender
+        part = MIMEText(body, 'html')
+        msg.attach(part)
+        smtp.sendmail(sender, email_receiver, msg=msg.as_string())

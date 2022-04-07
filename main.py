@@ -2,11 +2,12 @@ from utilities import send_email
 import os
 import json
 from Logger import MyLogger
+from dotenv import load_dotenv
+
 
 
 
 logger = MyLogger(os.path.basename(__file__))
-
 
 def main(request):
 
@@ -35,7 +36,8 @@ def main(request):
         return json.dumps({"success": True})
     
     except Exception as e:
-        
+        print(e)
         logger.error("Email notification failed. Process finished.")
         send_email(sender_email, sender_pass, email_subject, error_email_body + str(e), error_email_receivers)
         return json.dumps({"success": False})
+
